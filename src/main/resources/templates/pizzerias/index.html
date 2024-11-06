@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<div th:replace="~{fragments :: head}"></div>
+<title>Pizzeria</title>
+</head>
+<body>
+	<div class="container">
+		<h1>Pizzeria da Gino 100% Made in Italy </h1>
+	</div>
+	
+
+	<div class="container" th:if="${!pizzerias.isEmpty()}">
+		<table class="content table table-striped">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Description</th>
+					<th>Photo</th>
+					<th>Priece</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="pizzeria : ${pizzerias}">
+					<td th:text="${pizzeria.name}"></td>
+					<td th:text="${pizzeria.description}"></td>
+					<td > <img th:src="${pizzeria.photo}" style="width:100px, 100px;"></td>
+					<td th:text="${pizzeria.price}"></td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+
+	<div class="container" id="alert">
+		<div class="content alert alert-danger" role="alert"
+			th:if="${pizzerias.isEmpty()}">There is no pizzas for today, maybe tomorrw!</div>
+	
+	</div>
+	<div th:replace="~{fragments :: scripts}"></div>
+</body>
+</html>

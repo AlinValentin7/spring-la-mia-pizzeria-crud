@@ -1,0 +1,11 @@
+h1 {
+	display: flex;
+	justify-content: center;
+}
+#alert {
+	display: flex;
+		justify-content: center;
+}
+img{
+	height: 50px;
+}
