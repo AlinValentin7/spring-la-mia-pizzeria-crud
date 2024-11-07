@@ -24,8 +24,8 @@
 				<tr th:each="pizzeria : ${pizzerias}">
 					<td th:text="${pizzeria.name}"></td>
 					<td th:text="${pizzeria.description}"></td>
-					<td > <img th:src="${pizzeria.photo}" style="width:100px, 100px;"></td>
-					<td th:text="${pizzeria.price}"></td>
+					<td > <img th:src="${pizzeria.photo}"></td>
+					<td th:text="${pizzeria.price+$}"></td>
 				</tr>
 			</tbody>
 		</table>
