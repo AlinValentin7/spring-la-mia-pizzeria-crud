@@ -1,42 +1,61 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<div th:replace="~{fragments :: head}"></div>
-<title>Pizzeria</title>
+	<div th:replace="~{fragments :: head}"></div>
+	<title>Pizzeria</title>
 </head>
+
 <body>
 	<div class="container">
 		<h1>Pizzeria da Gino 100% Made in Italy </h1>
 	</div>
-	
+	<div class="container">
+		<form th:action="@{/pizzerias}" method="get">
+			<div class="input-group">
+				<input name="key" th:value="${key}" class="form-control" type="search" placeholder="Search"
+					aria-label="Search">
 
-	<div class="container" th:if="${!pizzerias.isEmpty()}">
-		<table class="content table table-striped">
-			<thead>
-				<tr>
-					<th>Name</th>
-					<th>Description</th>
-					<th>Photo</th>
-					<th>Priece</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="pizzeria : ${pizzerias}">
-					<td th:text="${pizzeria.name}"></td>
-					<td th:text="${pizzeria.description}"></td>
-					<td > <img th:src="${pizzeria.photo}"></td>
-					<td th:text="${pizzeria.price+$}"></td>
-				</tr>
-			</tbody>
-		</table>
+				<button class="btn btn-primary" type="submit">
+					<i class="bi bi-search"></i>
+				</button>
+			</div>
+		</form>
+	</div>
 
+
+	<div class="container" th:if="${pizzerias != null and !#lists.isEmpty(pizzerias)}">
+	    <table class="content table table-striped">
+	        <thead>
+	            <tr>
+	                <th>Name</th>
+	                <th>Description</th>
+	                <th>Photo</th>
+	                <th>Price</th>
+	            </tr>
+	        </thead>
+	        <tbody>
+	            <tr th:each="pizza : ${pizzerias}">
+	                <td th:text="${pizza.name}"></td>
+	                <td th:text="${pizza.description}"></td>
+	                <td><img th:src="${pizza.photo}"></td>
+	                <td th:text="${pizza.price + '$'}"></td>
+	                <td>
+	                    <a class="btn btn-primary" th:href="@{|/pizzerias/details/${pizza.id}|}">
+	                        <i>Check the details</i>
+	                    </a>
+	                </td>
+	            </tr>
+	        </tbody>
+	    </table>
 	</div>
 
 	<div class="container" id="alert">
-		<div class="content alert alert-danger" role="alert"
-			th:if="${pizzerias.isEmpty()}">There is no pizzas for today, maybe tomorrw!</div>
-	
+		<div class="content alert alert-danger" role="alert" th:if="${pizzerias.isEmpty()}">There is no pizzas for
+			today, maybe tomorrw!</div>
+
 	</div>
 	<div th:replace="~{fragments :: scripts}"></div>
 </body>
+
 </html>

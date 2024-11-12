@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "pizze")
-public class Pizzeria {
+public class Pizza {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
