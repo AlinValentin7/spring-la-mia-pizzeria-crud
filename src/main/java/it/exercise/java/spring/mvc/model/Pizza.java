@@ -1,10 +1,12 @@
 package it.exercise.java.spring.mvc.model;
 
 
-import java.net.URL;
+
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "pizze")
@@ -12,8 +14,13 @@ public class Pizza {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@NotNull(message = "Name must be insert")
+	@NotBlank(message ="Name cannot be emty")
 	private String name;
+	@NotNull(message = "Descpirtion must be insert")
+	@NotBlank(message ="Description cannot be emty")
 	private String description;
+	@NotNull(message = "Price must be insert")
 	private Double price;
 	private String photo;
 	

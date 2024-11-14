@@ -10,7 +10,7 @@ public class ReDirIndexController {
 	
 	@GetMapping
 	public String index() {
-		return "redirect:/pizzas";
+		return "redirect:/pizzerias";
 	}
 
 }

@@ -5,28 +5,28 @@
 <title th:text="${pizza.name}"></title>
 </head>
 <body>
-
+	<nav th:replace="~{fragments :: navbar}"></nav>
 	
 	<div class="container d-flex align-items-start flex-column bd-highlight mb-3"
 		style="height: 90vh;">
 		
 		<div class="container mb-auto" th:object="${pizza}">
-			<h1 th:text="*{name + price + 'Cost'}"></h1>
+			<h1 th:text="*{name +' '+ price + '$' }"></h1>
 			<hr />
 			<div class="row">
-				<div class="col-8">
+				<div class="col">
 					<dl>
 						<dt>Photo</dt>
-						<dd ><img th:src="$*{photo}"></dd>
+					 <dd><img th:src="*{photo}" style="height: 90vh;"></dd>
 						<dt>Description</dt> 
-						<dd :text="*{description}"></dd>
+						<dd th:text="*{description}"></dd>
 					</dl>
 				</div>
 			</div>
 		</div>
 		<div class="container mt-auto">
 			<a class="btn btn-primary" 
-			th:href="@{ ${/pizzerias} }" role="button">Back to pizzas</a>
+			th:href="@{ ${pizzaUrl} }" role="button">Back to pizzas</a>
 
 		</div>
 	</div>

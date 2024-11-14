@@ -7,55 +7,53 @@
 </head>
 
 <body>
+	<nav th:replace="~{fragments :: navbar}"></nav>
 	<div class="container">
 		<h1>Pizzeria da Gino 100% Made in Italy </h1>
-	</div>
-	<div class="container">
-		<form th:action="@{/pizzerias}" method="get">
-			<div class="input-group">
-				<input name="key" th:value="${key}" class="form-control" type="search" placeholder="Search"
-					aria-label="Search">
-
-				<button class="btn btn-primary" type="submit">
-					<i class="bi bi-search"></i>
-				</button>
+		<div th:if="${insertMessage != null}">
+			<div class="alert alert-success alert-dismissible fade show" role="alert" id="message">
+				<span th:text="${insertMessage}"></span>
+				<script>
+				  setTimeout(function() {
+				    let alertElement = document.getElementById('message');
+				    let alertInstance = bootstrap.Alert.getOrCreateInstance(alertElement);
+				    alertInstance.close();
+				  }, 5000); // 5000 millisecondi = 3 secondi
+				</script>
 			</div>
-		</form>
-	</div>
+		</div>
+		<div class="container" th:if="${pizzerias != null and !#lists.isEmpty(pizzerias)}">
+			<table class="content table table-striped">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Description</th>
+						<th>Photo</th>
+						<th>Price</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="pizza : ${pizzerias}">
+						<td th:text="${pizza.name}"></td>
+						<td th:text="${pizza.description}"></td>
+						<td><img th:src="${pizza.photo}"></td>
+						<td th:text="${pizza.price + '$'}"></td>
+						<td>
+							<a class="btn btn-primary" th:href="@{|/pizzerias/details/${pizza.id}?key=${key}|}">
+								<i>Check the details</i>
+							</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 
+		<div class="container" id="alert">
+			<div class="content alert alert-danger" role="alert" th:if="${pizzerias.isEmpty()}">There is no pizzas for
+				today, maybe tomorrw!</div>
 
-	<div class="container" th:if="${pizzerias != null and !#lists.isEmpty(pizzerias)}">
-	    <table class="content table table-striped">
-	        <thead>
-	            <tr>
-	                <th>Name</th>
-	                <th>Description</th>
-	                <th>Photo</th>
-	                <th>Price</th>
-	            </tr>
-	        </thead>
-	        <tbody>
-	            <tr th:each="pizza : ${pizzerias}">
-	                <td th:text="${pizza.name}"></td>
-	                <td th:text="${pizza.description}"></td>
-	                <td><img th:src="${pizza.photo}"></td>
-	                <td th:text="${pizza.price + '$'}"></td>
-	                <td>
-	                    <a class="btn btn-primary" th:href="@{|/pizzerias/details/${pizza.id}|}">
-	                        <i>Check the details</i>
-	                    </a>
-	                </td>
-	            </tr>
-	        </tbody>
-	    </table>
-	</div>
-
-	<div class="container" id="alert">
-		<div class="content alert alert-danger" role="alert" th:if="${pizzerias.isEmpty()}">There is no pizzas for
-			today, maybe tomorrw!</div>
-
-	</div>
-	<div th:replace="~{fragments :: scripts}"></div>
+		</div>
+		<div th:replace="~{fragments :: scripts}"></div>
 </body>
 
 </html>
