@@ -10,38 +10,56 @@
 	<nav th:replace="~{fragments :: navbar}"></nav>
 	<div class="container">
 		<h1>Pizzeria da Gino 100% Made in Italy </h1>
+		<hr th:replace="~{fragments :: line}" >
 		<div th:if="${insertMessage != null}">
 			<div class="alert alert-success alert-dismissible fade show" role="alert" id="message">
 				<span th:text="${insertMessage}"></span>
 				<script>
-				  setTimeout(function() {
-				    let alertElement = document.getElementById('message');
-				    let alertInstance = bootstrap.Alert.getOrCreateInstance(alertElement);
-				    alertInstance.close();
-				  }, 5000); // 5000 millisecondi = 3 secondi
+					setTimeout(function () {
+						let alertElement = document.getElementById('message');
+						let alertInstance = bootstrap.Alert.getOrCreateInstance(alertElement);
+						alertInstance.close();
+					}, 5000); // 5000 millisecondi = 3 secondi
 				</script>
 			</div>
+			
 		</div>
 		<div class="container" th:if="${pizzerias != null and !#lists.isEmpty(pizzerias)}">
-			<table class="content table table-striped">
+			<table class="content table table-danger">
 				<thead>
-					<tr>
+					<tr class="table-success">
 						<th>Name</th>
 						<th>Description</th>
 						<th>Photo</th>
 						<th>Price</th>
+						<th></th>
+						<th></th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:each="pizza : ${pizzerias}">
-						<td th:text="${pizza.name}"></td>
-						<td th:text="${pizza.description}"></td>
-						<td><img th:src="${pizza.photo}"></td>
-						<td th:text="${pizza.price + '$'}"></td>
-						<td>
+						<td  class="table-primary" th:text="${pizza.name}"></td>
+						<td class="table-secondary"th:text="${pizza.description}"></td>
+						<td class="table-warning"><img th:src="@{${pizza.photo}}"></td>
+						<td class="table-info" th:text="${pizza.price + '$'}"></td>
+						<td class="table-light">
 							<a class="btn btn-primary" th:href="@{|/pizzerias/details/${pizza.id}?key=${key}|}">
 								<i>Check the details</i>
 							</a>
+						</td>
+						<td class="table-warning">
+							<a class="btn btn-warning" th:href="@{|/pizzerias/edit/${pizza.id}}">
+								<i class="bi bi-pencil-square"></i>
+							</a>
+						</td>
+						<td>
+							<form action="#" th:action="@{'/pizzerias/delete/{id}'(id=${pizza.id})}" method ="post">
+							<button class="btn btn-danger" type="submit" id="submitButton"
+							onclick="return confirm ('Hey Buddy! if you cofirm, this pizza was never exist, r you sure about that?')">
+								<i class="bi bi-trash3"></i>
+							</button>
+							</form>
 						</td>
 					</tr>
 				</tbody>

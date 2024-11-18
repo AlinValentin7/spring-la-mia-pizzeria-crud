@@ -78,8 +78,27 @@ public class PizzeriaController {
 		pizzeriaRep.save(formPizza);
 		redirectAttributes.addFlashAttribute("insertMessage", "New pizza was insert");
 		return "redirect:/pizzerias";
-		
 	}
 	
+	@GetMapping("/edit/{id}")
+	public String edit (@PathVariable(name ="id") Long id, Model model ) {
+		model.addAttribute("pizza", pizzeriaRep.findById(id).get());
+		return "pizzerias/edit";
+		}
+	@PostMapping("/edit/{id}")
+	public String editP (@Valid @ModelAttribute("pizza") Pizza formPizza, BindingResult bindingResult,
+			Model model) {
+		if(bindingResult.hasErrors()) {
+			return "/pizzerias/edit";
+			}
+		pizzeriaRep.save(formPizza);
+		return "redirect:/pizzerias";
+		
+	}
+	@PostMapping("/delete/{id}")
+	public String delete(@PathVariable("id") Long id) {
+		pizzeriaRep.deleteById(id);
+		return "redirect:/pizzerias";
+	}
 
 }

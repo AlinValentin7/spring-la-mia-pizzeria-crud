@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="~{fragments :: head}"></div>
+    <title>Update Pizza</title>
+</head>
+<body>
+	<nav th:replace="~{fragments :: navbar}"></nav>
+	<div class="container">
+    <h1>Update Pizza</h1>
+   <hr th:replace="~{fragments :: line}" >
+    <form id="pizza-form" th:object="${pizza}" th:action="@{'/pizzerias/edit/{id}'(id=${pizza.id})}"
+          method="post" class="row g-3">
+        <div class="col-md-10">
+            <label for="name" class="form-label">Name</label> 
+            <input type="text" class="form-control" id="name" th:errorClass="is-invalid"
+                   placeholder="Insert name Here!" th:field="*{name}" required>
+            <div th:if="${#fields.hasErrors('name')}" class="invalid-feedback">
+                <ul>
+                    <li th:each="err : ${#fields.errors('name')}" th:text="${err}"></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <label for="price" class="form-label">Price</label> 
+            <input type="number" class="form-control" id="price" th:errorClass="is-invalid"
+                   placeholder="Insert Price Here!" th:field="*{price}" required>
+            <div th:if="${#fields.hasErrors('price')}" class="invalid-feedback">
+                <ul>
+                    <li th:each="err : ${#fields.errors('price')}" th:text="${err}"></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <label for="desc" class="form-label">Description</label> 
+            <textarea id="desc" class="form-control" th:errorClass="is-invalid"
+                      placeholder="Insert description Here!" th:field="*{description}" required></textarea>
+            <div th:if="${#fields.hasErrors('description')}" class="invalid-feedback">
+                <ul>
+                    <li th:each="err : ${#fields.errors('description')}" th:text="${err}"></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <label for="img" class="form-label">Image URL</label> 
+            <input type="url" class="form-control" id="img" th:errorClass="is-invalid"
+                   placeholder="Insert the URL for pizza image" th:field="*{photo}" >
+            
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Update Pizza</button>
+            <a class="btn btn-danger" th:href="@{/pizzerias}">Cancel</a>
+        </div>
+    </form>
+	</div>
+    <div th:replace="~{fragments :: scripts}"></div>
+</body>
+</html>

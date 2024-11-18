@@ -1,35 +1,52 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<div th:replace="~{fragments :: head}"></div>
-<title th:text="${pizza.name}"></title>
+	<div th:replace="~{fragments :: head}"></div>
+	<title th:text="${pizza.name}"></title>
 </head>
+
 <body>
 	<nav th:replace="~{fragments :: navbar}"></nav>
-	
-	<div class="container d-flex align-items-start flex-column bd-highlight mb-3"
-		style="height: 90vh;">
-		
+
+	<div class="container d-flex align-items-start flex-column bd-highlight mb-3" style="height: 90vh;">
+
 		<div class="container mb-auto" th:object="${pizza}">
 			<h1 th:text="*{name +' '+ price + '$' }"></h1>
-			<hr />
+			<hr th:replace="~{fragments :: line}">
 			<div class="row">
 				<div class="col">
 					<dl>
 						<dt>Photo</dt>
-					 <dd><img th:src="*{photo}" style="height: 90vh;"></dd>
-						<dt>Description</dt> 
+						<dd><img th:src="*{photo}" style="height: 90vh;"></dd>
+						<dt>Description</dt>
 						<dd th:text="*{description}"></dd>
 					</dl>
 				</div>
 			</div>
 		</div>
-		<div class="container mt-auto">
-			<a class="btn btn-primary" 
-			th:href="@{ ${pizzaUrl} }" role="button">Back to pizzas</a>
-
+		<div class="container d-flex justify-content-center ">
+			<div class="row ">
+				<div class="col md-6">
+					<a class="btn btn-primary" th:href="@{ ${pizzaUrl} }" role="button">Back to pizzas</a>
+				</div>
+				<div class="col md-6">
+					<a class="btn btn-warning" th:href="@{|/pizzerias/edit/${pizza.id}}">
+						<i class="bi bi-pencil-square"> Edit! </i>
+					</a>
+				</div>
+				<div class="col md-6">
+					<form   action="#" th:action="@{'/pizzerias/delete/{id}'(id=${pizza.id})}" method="post">
+						<button class="btn btn-danger" type="submit" id="submitButton"
+							onclick="return confirm ('Hey Buddy! if you cofirm, this pizza was never exist, r you sure about that?')">
+							<i class="bi bi-trash3"> Delete! </i>
+						</button>
+					</form>
+				</div>
+			</div>
 		</div>
 	</div>
 	<div th:replace="~{fragments :: scripts}"></div>
 </body>
+
 </html>
